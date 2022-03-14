@@ -32,7 +32,11 @@ interface IData {
 }
 
 const List: React.FC<IRouteParams> = ({ match }) => {
-    const [data, setData] = useState<IData[]>([])    
+    const [data, setData] = useState<IData[]>([]);
+    const [monthSelected, setMonthSelected] = useState<string>(String(new Date().getMonth() + 1));
+    const [yearSelected, setYearSelected] = useState<string>(String(new Date().getFullYear));
+    
+    
     const { type } = match.params;
 
     const title = useMemo(() => {
@@ -79,11 +83,12 @@ const List: React.FC<IRouteParams> = ({ match }) => {
     return (
         <Container>
             <ContentHeader title={title} lineColor={lineColor}>
-                <SelectInput options={months} />
-                <SelectInput options={years} />
+                <SelectInput options={months} onChange={(e) => setMonthSelected(e.target.value)} defaultValue={monthSelected}/>
+                <SelectInput options={years} onChange={(e) => setYearSelected(e.target.value)} defaultValue={yearSelected}/>
+
             </ContentHeader>
 
-            <Filters>
+            <Filters> 
                 <button 
                     type="button"
                     className="tag-filter tag-filter-recurrent"
