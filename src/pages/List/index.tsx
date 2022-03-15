@@ -11,6 +11,7 @@ import formatDate from '../../utils/formatDate';
 
 import { Container, Content, Filters } from './styles';
 import { isTypeNode } from 'typescript';
+import { fileURLToPath } from 'url';
 
 interface IRouteParams {
     match: {
@@ -54,32 +55,40 @@ const List: React.FC<IRouteParams> = ({ match }) => {
     },[]);
 
     const months = [
-        {value: 9, label: 'Setembro'},
+        {value: 1, label: 'Janeiro'},
+        {value: 5, label: 'Maio'},
         {value: 7, label: 'Julho'},
-        {value: 8, label: 'Agosto'},
     ];
 
     const years = [
-        {value: 2021, label: '2021'},
         {value: 2019, label: '2019'},
+        {value: 2018, label: '2018'},
         {value: 2020, label: '2020'},
     ];
 
 
     useEffect (() => {
-        const response = listData.map(item => {
+        const filteredData = listData.filter(item => {
+            const date = new Date(item.date);
+            const month = String(date.getMonth() + 1);
+            const year = String(date.getFullYear());
+
+            return month === monthSelected && year === yearSelected;
+        });
+
+        const formattedData = filteredData.map(item => {
             return {
-                id: String(Math.random () * data.length),
+                id: String(new Date().getTime()) + item.amount,
                 description: item.description,
-                amountformatted: formatCurrency (Number(item.amount)),
+                amountformatted: formatCurrency(Number( item.amount)),
                 frequency: item.frequency,
                 dataFormatted: formatDate(item.date),
-                tagColor: item.frequency === 'recorrente' ? '#E44C4E' : '#4E41F0' 
+                tagColor: item.frequency === 'recorrente' ? '#E44C4E' : '#4E41F0',
             }
         })
 
-        setData(response);
-    },[]);
+        setData(formattedData);
+    },[listData, monthSelected, yearSelected, data.length]);
     return (
         <Container>
             <ContentHeader title={title} lineColor={lineColor}>
