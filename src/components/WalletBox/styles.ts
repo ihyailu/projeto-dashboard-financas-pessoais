@@ -1,12 +1,12 @@
-import styled from 'styled-components';
+import { IconContext } from "react-icons";
+import styled from "styled-components";
 
 interface IContainerProps {
     color: string;
 }
 
 
-export const Container = styled.div<IContainerProps>`
-
+export const Container = styled.div<IconContext>`
     width: 32%;
     height: 150px;
 
@@ -21,25 +21,25 @@ export const Container = styled.div<IContainerProps>`
     position: relative;
     overflow: hidden;
 
-    >img {
+    > img {
         height: 110%;
         position: absolute;
         top: -10px;
         right: -30px;
 
-        opacity: .3;
-
+        opacity: 35%;
     }
 
     > span {
-        font-size: 500;
+        font-size: 18px;
+        font-weight: 500;
 
     }
 
     > small {
         font-size: 12px;
         position: absolute;
-        bottom: 10px;
-    } 
+        bottom: 10px; 
+    }
 
 `;

@@ -1,5 +1,6 @@
 import React, {useMemo} from 'react';
 
+import CountUp from 'react-countup';
 import dolar from '../../assets/dolar.svg';
 import arrowUpImg from '../../assets/arrow-up.svg';
 import arrowDownImg from '../../assets/arrow-down.svg';
@@ -31,15 +32,24 @@ const WalletBox: React.FC<IWalletBoxProps> = ({
             case 'arrowDown':
                 return arrowDownImg
             default:
-                return undefined;
-                
+                return undefined;   
         }
     },[icon]);
 
     return (
         <Container color={color}>
             <span>{title}</span>
-            <h1>{amount}</h1>
+            <h1>
+                <CountUp
+                    end={amount}
+                    prefix={"R$ "}
+                    separator="."
+                    decimal=','
+                    decimals={2}
+                />
+
+
+            </h1>
             <small>{footerlabel}</small>
             <img src={iconSelected} alt={title} />
         </Container>

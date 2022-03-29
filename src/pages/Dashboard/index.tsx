@@ -97,23 +97,23 @@ const Dashboard: React.FC = () => {
                 amount={150.00}
                 footerlabel="atualizado com base nas entradas e saídas"
                 icon="dolar"
-                />
+            />
 
-            <WalletBox
+                <WalletBox
                 title="entradas"
                 color="#F7931B"
                 amount={5000.00}
                 footerlabel="atualizado com base nas entradas e saídas"
                 icon="arrowUp"
-                />
+            />
 
-            <WalletBox
+                <WalletBox
                 title="saídas"
                 color="#E44C4E"
                 amount={4850.00}
                 footerlabel="atualizado com base nas entradas e saídas"
                 icon="arrowDown"
-                />
+            />
             </Content>
         </Container>
         
