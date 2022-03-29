@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 
 import dolar from '../../assets/dolar.svg';
 import arrowUpImg from '../../assets/arrow-up.svg';
@@ -21,12 +21,27 @@ const WalletBox: React.FC<IWalletBoxProps> = ({
     footerlabel,
     icon, color
 }) => {
+
+    const iconSelected = useMemo(() => {
+        switch (icon) {
+            case 'dolar':
+                return dolar;
+            case 'arrowUp':
+                return arrowUpImg;
+            case 'arrowDown':
+                return arrowDownImg
+            default:
+                return undefined;
+                
+        }
+    },[icon]);
+
     return (
         <Container color={color}>
             <span>{title}</span>
             <h1>{amount}</h1>
             <small>{footerlabel}</small>
-            <img src={dolar} alt={title} />
+            <img src={iconSelected} alt={title} />
         </Container>
     )
 }
