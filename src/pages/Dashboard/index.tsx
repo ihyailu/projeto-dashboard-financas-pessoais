@@ -86,6 +86,58 @@ const Dashboard: React.FC = () => {
     },[monthSelected, yearSelected])
 
 
+    const totalGains = useMemo(() => {
+        let total: number = 0;
+
+        gains.forEach(item => {
+            const date = new Date(item.date);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+
+            if(month === monthSelected && year === yearSelected){
+                try{
+                    total += Number(item.amount)
+                }catch{
+                    throw new Error('Invalid amount! Amount must be number.')
+                }
+            }
+        })
+
+        return total;
+    },[monthSelected, yearSelected])
+
+    const totalBalance = useMemo(() => {
+        return totalGains - totalExpenses;
+    },[totalGains, totalExpenses]);
+
+    const message = useMemo(() => {
+        if(totalBalance <0){
+            return {
+                title: "Que triste!",
+                description: "Neste mês, você gastou mais do que deveria.",
+                footerText: "Verifique seus gastos e tente cortar algumas coisas desnecessárias.",
+                icon: sadImg
+            }
+        }
+        else if(totalBalance == 0){
+            return {
+                title: "Ufa!",
+                description: "Neste mês você ficou no limite.",
+                footerText: "Pleneje melhor no próximo mês.",
+                icon: happyImg
+            }
+        }
+
+        else{
+            return {
+                title: "Muito bem!",
+                description: "Continue assim!",
+                footerText: "Tente investir um pouco.",
+                icon: happyImg
+            }
+        }
+
+    },[totalBalance])
 
     const handleMonthSelected = (month: string) => {
         try {
@@ -124,7 +176,7 @@ const Dashboard: React.FC = () => {
                 <WalletBox
                 title="saldo"
                 color="#4E41F0"
-                amount={150.00}
+                amount={totalBalance }
                 footerlabel="atualizado com base nas entradas e saídas"
                 icon="dolar"
             />
@@ -132,7 +184,7 @@ const Dashboard: React.FC = () => {
                 <WalletBox
                 title="entradas"
                 color="#F7931B"
-                amount={5000.00}
+                amount={totalGains}
                 footerlabel="atualizado com base nas entradas e saídas"
                 icon="arrowUp"
             />
@@ -145,11 +197,11 @@ const Dashboard: React.FC = () => {
                 icon="arrowDown"
             />
 
-                <MessageBox 
-                title="Muito bem!"
-                description="Sua carteira está positiva!"
-                footerText="Continue assim. Considere investir o seu saldo."
-                icon={happyImg}
+                <MessageBox
+                    title={message.title}
+                    description={message.description}
+                    footerText={message.footerText}
+                    icon={message.icon}
                 />
             </Content>
         </Container>
