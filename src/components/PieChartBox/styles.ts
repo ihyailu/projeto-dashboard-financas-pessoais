@@ -12,7 +12,7 @@ export const Container = styled.div`
     background-color: ${props => props.theme.colors.tertiary};
     color: ${props => props.theme.colors.white};
 
-    border-radois: 7px;
+    border-radius: 7px;
 
     display: flex; 
 `;
@@ -47,6 +47,7 @@ export const LegendContainer = styled.ul`
 
     ::-webkit-scrollbar-thumb {
     background-color: ${props => props.theme.colors.secondary};
+    display: none;
     border-radius: 10px;
 }
 
@@ -77,4 +78,8 @@ export const Legend = styled.li<IlegendProps>`
 
 `;
 
-export const SideRight = styled.main``;
+export const SideRight = styled.main`
+    display: flex;
+    flex: 1;
+    justify-content: center;
+`;
