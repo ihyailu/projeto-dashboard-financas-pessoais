@@ -227,7 +227,7 @@ const Dashboard: React.FC = () => {
             return month === monthSelected && year === yearSelected;
         })
         .forEach((expense) => {
-            if(expense.frequency === 'recorrent'){
+            if(expense.frequency === 'recorrente'){
                 return amountRecurrent += Number(expense.amount);
             }
             if(expense.frequency === 'eventual'){
@@ -235,7 +235,7 @@ const Dashboard: React.FC = () => {
             }
         });
 
-        const total = amountRecurrent = amountEventual;
+        const total = amountRecurrent + amountEventual;
 
         return[
             {
@@ -256,6 +256,49 @@ const Dashboard: React.FC = () => {
     
 
         },[monthSelected, yearSelected]);
+
+        const relationGainsRecurrentVersusEventual = useMemo(() => {
+            let amountRecurrent = 0;
+            let amountEventual = 0;
+    
+            gains
+            .filter((gain) => {
+                const date = new Date(gain.date);
+                const year = date.getFullYear();
+                const month = date.getMonth() + 1;
+    
+                return month === monthSelected && year === yearSelected;
+            })
+            .forEach((gain) => {
+                if(gain.frequency === 'recorrente'){
+                    return amountRecurrent += Number(gain.amount);
+                }
+                if(gain.frequency === 'eventual'){
+                    return amountEventual += Number(gain.amount);
+                }
+            });
+    
+            const total = amountRecurrent + amountEventual;
+    
+            return[
+                {
+                    name: 'Recorrentes',
+                    amount: amountRecurrent,
+                    percent: Number(((amountEventual / total) * 100).toFixed(1)),
+                    color: "#F7931B"
+    
+                },
+                {
+                    name: 'Eventual',
+                    amount: amountEventual,
+                    percent: Number(((amountEventual / total) * 100).toFixed(1)),
+                    color: "#E44C4E"
+    
+                }
+            ];
+        
+    
+            },[monthSelected, yearSelected]);
 
     const handleMonthSelected = (month: string) => {
         try {
@@ -334,6 +377,11 @@ const Dashboard: React.FC = () => {
             title="Saídas"
             data={relationExpensevesRecurrentVersusEventual} />
 
+            <BarChartBox 
+            title="Entradas"
+            data={relationGainsRecurrentVersusEventual} />
+
+
             </Content>
         </Container>
         
@@ -341,3 +389,4 @@ const Dashboard: React.FC = () => {
 }
 
 export default Dashboard;
+
