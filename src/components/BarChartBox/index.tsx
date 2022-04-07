@@ -59,7 +59,10 @@ const BarChartBox: React.FC<IBarChartProps> = ({ title, data }) => (
                                 ))
                             }
                         </Bar> 
-                        <Tooltip formatter={(value:number) => formatCurrency(value)} />
+                        <Tooltip 
+                            cursor={{fill: 'none'}}
+                            formatter={(value:number) => formatCurrency(value)} 
+                        />
                     </BarChart>
                 </ResponsiveContainer>
             </SideRight>
