@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import React, {useState, useMemo, useCallback} from 'react';
 
 import ContentHeader from '../../components/ContentHeader';
 import SelectInput from '../../components/SelectInput';
@@ -314,7 +314,7 @@ const Dashboard: React.FC = () => {
     
             },[monthSelected, yearSelected]);
 
-    const handleMonthSelected = (month: string) => {
+    const handleMonthSelected = useCallback((month: string) => {
         try {
             const parseMonth = Number(month);
             setMonthSelected(parseMonth);
@@ -322,9 +322,9 @@ const Dashboard: React.FC = () => {
         catch{
             throw new Error('invalid month value. Is accept 0 - 24.')
         }
-    }
+    },[]);
 
-    const handleYearSelected = (year: string) => {
+    const handleYearSelected = useCallback((year: string) => {
         try {
             const parseYear = Number(year);
             setYearSelected(parseYear);
@@ -332,7 +332,7 @@ const Dashboard: React.FC = () => {
         catch{
             throw new Error('invalid year value. Is accept integer number.')
         }
-    }
+    },[]);
 
 
 
