@@ -11,8 +11,6 @@ import {
     Welcome,
     UserName
 }   from './styles';
-import dark from "../../styles/themes/dark";
-
 
 
 const MainHeader: React.FC = () => {
