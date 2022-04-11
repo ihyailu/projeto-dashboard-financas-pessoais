@@ -3,6 +3,7 @@ import React from "react";
 import logo from '../../assets/logo.svg';
 
 import Input from "../../components/Input";
+import Button from "../../components/Button";
 
 import {
     Container,
@@ -32,7 +33,7 @@ const SignIn: React.FC = () => {
                     required
                     placeholder="senha"
                 />
-                <button type="submit">Acessar</button>
+                <Button type="submit">Acessar</Button>
             </Form>
         </Container>  
 
