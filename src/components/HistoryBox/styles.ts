@@ -28,42 +28,54 @@ export const Header = styled.header`
 
     display: flex;
     justify-content: space-between;
-    
-> h2 {
-    margin-bottom: 20px;
-    padding-left: 16px;
-}
+
+    > h2 {
+        margin-bottom: 20px;
+        padding-left: 16px;
+    }
+
+
+    @media(max-width: 1200px){
+        flex-direction: column;
+    }
 `;
 
 export const LegendContainer = styled.ul`
     list-style: none;
-
+    
     display: flex;
     padding-right: 16px;
-
 `;
 
 export const Legend = styled.li<IlegendProps>`
     display: flex;
-    align-items: center;
+    align-items: center;    
 
-    margin-bottom: 7px;
-    margin-left: 7px;
+    margin-bottom: 7px;    
+    margin-left: 16px;    
 
-    >div {
+    > div {
         background-color: ${props => props.color};
 
         width: 40px;
         height: 40px;
         border-radius: 5px;
-
-        font-size: 14px;
+        
+        font-size: 14px;        
         line-height: 40px;
         text-align: center;
-
     }
 
     > span {
         margin-left: 5px;
+    }
+
+
+    
+    @media(max-width: 1280px){
+        > div {
+            width: 30px;
+            height: 30px;
+        }
     }
 `;

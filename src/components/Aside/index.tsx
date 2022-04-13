@@ -1,15 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
+import Toggle from '../Toggle';
 
 import {
     MdDashboard,
     MdArrowDownward,
     MdArrowUpward,
-    MdExitToApp
-} from 'react-icons/md'
+    MdExitToApp,
+    MdClose,
+    MdMenu, 
+} from 'react-icons/md';
 
-import logoimg from '../../assets/logo.svg';
+import logoImg from '../../assets/logo.svg';
 
 import { useAuth } from '../../hooks/auth';
+import { useTheme } from '../../hooks/theme';
 
 import { 
     Container,
@@ -19,23 +23,44 @@ import {
     MenuContainer,
     MenuItemLink,
     MenuItemButton,
-} from './styles';
+    ToggleMenu,
+    ThemeToggleFooter,
+}  from './styles';
 
 const Aside: React.FC = () => {
-    const {signOut} = useAuth();
+    const { signOut } = useAuth();
+    const { toggleTheme, theme } = useTheme();
+
+    const [toggleMenuIsOpened, setToggleMenuIsOpened ] = useState(false);
+    const [darkTheme, setDarkTheme] = useState(() => theme.title === 'dark' ? true : false);
+
+
+    const handleToggleMenu = () => {
+        setToggleMenuIsOpened(!toggleMenuIsOpened);
+    }
+
+
+    const handleChangeTheme = () => {
+        setDarkTheme(!darkTheme);
+        toggleTheme();
+    }
 
 
     return (
-        <Container>
+        <Container menuIsOpen={toggleMenuIsOpened}>
             <Header>
-                <LogImg src={logoimg} alt="Logo Minha Carteira" />
+                <ToggleMenu onClick={handleToggleMenu}>
+                { toggleMenuIsOpened ? <MdClose /> : <MdMenu /> }
+                </ToggleMenu>
+
+                <LogImg src={logoImg} alt="Logo Minha Carteira" />
                 <Title>Minha Carteira</Title>
             </Header>
 
             <MenuContainer>
                 <MenuItemLink href="/">
                     <MdDashboard />
-                    DashBoard
+                    Dashboard
                 </MenuItemLink>
 
                 <MenuItemLink href="/list/entry-balance">
@@ -52,8 +77,16 @@ const Aside: React.FC = () => {
                     <MdExitToApp />
                     Sair
                 </MenuItemButton>
-                
             </MenuContainer>
+
+            <ThemeToggleFooter menuIsOpen={toggleMenuIsOpened}>
+                <Toggle
+                    labelLeft="Light"
+                    labelRight="Dark"
+                    checked={darkTheme}
+                    onChange={handleChangeTheme}
+                />
+            </ThemeToggleFooter>
         </Container>
     );
 }
